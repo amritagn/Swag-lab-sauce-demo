@@ -22,7 +22,7 @@ public abstract class demo {
   private static final WebElement[] itemList = null;
   private static final WebElement[] cartItemList = null;
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
+    // Login Testing and input validation
     System.setProperty("webdriver.chrome.driver", "C:\\Users\\ASUS\\Desktop\\SELENIUM\\chromedriver_win32\\chromedriver.exe");
     WebDriver driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
@@ -32,6 +32,7 @@ public abstract class demo {
     driver.findElement(By.cssSelector("btn_action")).click();
   }
 
+  // Product sorting
   WebDriver driver = new ChromeDriver(); {
     driver.get("https://www.saucedemo.com/inventory.html");
     Select select = new Select(driver.findElement(By.className("product_sort_container")));
@@ -51,12 +52,16 @@ public abstract class demo {
     for (int i = 0; i < price.size() - 1; i++) {
       Assert.assertTrue(prices.get(i) <= prices.get(i + 1));
     } {}
+    
+    //Add all items to cart
     driver.findElements(By.className("inventory_item"));
     for (WebElement item: itemList) {
       WebElement button = item.findElement(By.cssSelector("button.btn_inventory"));
       if (button.getText().equals("ADD TO CART")) button.click();
     }
-
+    
+    
+    //Go to cart page and remove the items that have price <15
     {
       driver.findElement(By.cssSelector("shopping_cart_link")).click();
       driver.findElement(By.cssSelector("div.cart_item"));
@@ -66,11 +71,14 @@ public abstract class demo {
         if (Float.parseFloat(price) < 15) {
           item.findElement(By.cssSelector("button.cart_button")).click();
         }
-
+      }
+ 
+        //Checkout
         {
           driver.findElement(By.cssSelector("btn_actioncheckout_button")).click();
         }
 
+      //Logout
         {
           driver.findElement(By.cssSelector("img[alt=Swag Labs]")).click();
           driver.findElement(By.cssSelector("bm-burger-button")).click();
@@ -81,6 +89,5 @@ public abstract class demo {
 
     }
 
-  }
-
 }
+
